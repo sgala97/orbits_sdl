@@ -5,18 +5,11 @@ bool init(){
         std::cout << "Error SDL" << SDL_GetError() << std::endl;
         return false;
     }
-    int imgFlags = IMG_INIT_PNG;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) )
-    {
-        std::cout << "Error SDL" << SDL_GetError() << std::endl;
-        return false;
-    }
     return true;
 }
 
 void close()
 {
-    IMG_Quit();
     SDL_Quit();
 }
 

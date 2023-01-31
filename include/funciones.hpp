@@ -3,6 +3,7 @@
 #pragma once
 #include <iostream>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+Uint32 ColourToUint(int R, int G, int B, int A);
 
+SDL_Colour UintToColour(Uint32 colour);
 #endif

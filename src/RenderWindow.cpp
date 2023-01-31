@@ -1,16 +1,19 @@
 #include "RenderWindow.hpp"
 
-RenderWindow::RenderWindow(char* title, int height, int width) 
-    : window(NULL), render(NULL)
-{
+RenderWindow::RenderWindow(char* title, int height, int width, Uint32 flags) 
+    : window(NULL), render(NULL){
+
+    // create window
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, 
-        SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN); 
-    if (window != NULL)
-    {
-        render = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
+        SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | flags ); 
+
+    // create render
+    if (window != NULL){
+        render = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     }
 }
 
+// check if window is created
 bool RenderWindow::isCreated()
 {
     if(window == NULL || render == NULL)
@@ -18,6 +21,11 @@ bool RenderWindow::isCreated()
         return false;
     }
     return true;
+}
+
+// return window as a pointer
+SDL_Window* RenderWindow::getWindow(){
+    return window;
 }
 
 void RenderWindow::update()
