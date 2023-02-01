@@ -51,11 +51,9 @@ int main(int argc, char *args[]) {
   unsigned int delta2 = SDL_GetTicks();
   unsigned int delta;
 
-  Vector positionP;
-  positionP.x = WIDTH / 2;
-  positionP.y = HEIGHT / 2;
-
-  int flags;
+  Vector positionCentralPlanet;
+  positionCentralPlanet.x = WIDTH / 2;
+  positionCentralPlanet.y = HEIGHT / 2;
 
   while (!quit) {
     while (SDL_PollEvent(event) != NULL) {
@@ -66,25 +64,27 @@ int main(int argc, char *args[]) {
       }
     }
 
-    flags = SDL_GetWindowFlags(window.getWindow());
     delta2 = delta1;
     delta1 = SDL_GetTicks();
     delta = SDL_abs(delta1 - delta2);
     double deltaS = delta / 1000.0f;
 
-    if (true) {
-      SDL_SetRenderDrawColor(window.getRender(), 0x00, 0x00, 0x00, 0x00);
-      window.clear();
-      planeta.updatePlaneta(&positionP, 4000000.0f, deltaS);
-      planeta1.updatePlaneta(&positionP, 4000000.0f, deltaS);
-      planeta2.updatePlaneta(&positionP, 4000000.0f, deltaS);
-      planeta.drawPlaneta(window.getRender());
-      planeta1.drawPlaneta(window.getRender());
-      planeta2.drawPlaneta(window.getRender());
-      filledCircleColor(window.getRender(), WIDTH / 2, HEIGHT / 2, 30,
-                        ColourToUint(200, 0, 255, 255));
-      window.update();
-    }
+    SDL_SetRenderDrawColor(window.getRender(), 0x00, 0x00, 0x00, 0x00);
+    window.clear();
+
+    planeta.updatePlaneta(&positionCentralPlanet, 4000000.0f, deltaS);
+    planeta1.updatePlaneta(&positionCentralPlanet, 4000000.0f, deltaS);
+    planeta2.updatePlaneta(&positionCentralPlanet, 4000000.0f, deltaS);
+
+    planeta.drawPlaneta(window.getRender());
+    planeta1.drawPlaneta(window.getRender());
+    planeta2.drawPlaneta(window.getRender());
+
+    filledCircleColor(window.getRender(), positionCentralPlanet.x , 
+                      positionCentralPlanet.y, 30,
+                      ColourToUint(200, 0, 255, 255));
+
+    window.update();
   }
   close();
   return 0;
